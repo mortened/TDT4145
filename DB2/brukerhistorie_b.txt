@@ -1,0 +1,78 @@
+INSERT INTO Operatør(Navn) VALUES
+("SJ-Nord");
+
+
+INSERT INTO Togrute (Rutenavn, Kjøreretning, StartstasjonNavn, SluttstasjonNavn, Operatørnavn) VALUES
+("Trondheim-Bodø-Dagtog", 1, "Trondheim S", "Bodø",  "SJ-Nord" ),
+("Trondheim-Bodø-Nattog", 1, "Trondheim S", "Bodø", "SJ-Nord"),
+("MoIRana-Trondheim-Morgentog", 0, "Mo i Rana", "Trondheim S", "SJ-Nord");
+
+
+INSERT INTO Togrutedag (Rutenavn, Ukedag) VALUES
+("Trondheim-Bodø-Dagtog", "Mandag"),
+("Trondheim-Bodø-Dagtog", "Tirsdag"),
+("Trondheim-Bodø-Dagtog", "Onsdag"),
+("Trondheim-Bodø-Dagtog", "Torsdag"),
+("Trondheim-Bodø-Dagtog", "Fredag"),
+("Trondheim-Bodø-Nattog", "Mandag"),
+("Trondheim-Bodø-Nattog", "Tirsdag"),
+("Trondheim-Bodø-Nattog", "Onsdag"),
+("Trondheim-Bodø-Nattog", "Torsdag"),
+("Trondheim-Bodø-Nattog", "Fredag"),
+("Trondheim-Bodø-Nattog", "Lørdag"),
+("Trondheim-Bodø-Nattog", "Søndag"),
+("MoIRana-Trondheim-Morgentog", "Mandag"),
+("MoIRana-Trondheim-Morgentog", "Tirsdag"),
+("MoIRana-Trondheim-Morgentog", "Onsdag"),
+("MoIRana-Trondheim-Morgentog", "Torsdag"),
+("MoIRana-Trondheim-Morgentog", "Fredag");
+
+
+INSERT INTO StartStasjonPåTogrute(Stasjonsnavn, Rutenavn, AvgangsTid) VALUES
+("Trondheim S", "Trondheim-Bodø-Dagtog", "07:49"),
+("Trondheim S", "Trondheim-Bodø-Nattog", "23:05"),
+('Mo i Rana', 'MoIRana-Trondheim-Morgentog', '08:11');
+
+
+INSERT INTO SluttStasjonPåTogrute(Stasjonsnavn, Rutenavn, AnkomstTid) VALUES
+("Bodø", "Trondheim-Bodø-Dagtog", "17:34"),
+("Bodø", "Trondheim-Bodø-Nattog", "09:05"),
+('Trondheim S', 'MoIRana-Trondheim-Morgentog', '14:13');
+
+
+INSERT INTO StopperPåStasjon(Stasjonsnavn, RuteNavn, AvgangsTid) VALUES
+("Steinkjer", "Trondheim-Bodø-Dagtog", "09:51"),
+("Mosjøen", "Trondheim-Bodø-Dagtog", "13:20"),
+("Mo i Rana", "Trondheim-Bodø-Dagtog", "14:31"),
+("Fauske", "Trondheim-Bodø-Dagtog", "16:49"),
+("Steinkjer", "Trondheim-Bodø-Nattog", "00:57"),
+("Mosjøen", "Trondheim-Bodø-Nattog", "04:41"),
+("Mo i Rana", "Trondheim-Bodø-Nattog", "05:55"),
+("Fauske", "Trondheim-Bodø-Nattog", "08:19"),
+('Mosjøen', 'MoIRana-Trondheim-Morgentog', '09:14'),
+('Steinkjer', 'MoIRana-Trondheim-Morgentog', '12:31');
+
+
+INSERT INTO DelstrekningPåTogrute (DelstrekningID, Rutenavn) VALUES 
+(1, "Trondheim-Bodø-Dagtog"),
+(2, "Trondheim-Bodø-Dagtog"),
+(3, "Trondheim-Bodø-Dagtog"),
+(4, "Trondheim-Bodø-Dagtog"),
+(5, "Trondheim-Bodø-Dagtog"),
+(1, "Trondheim-Bodø-Nattog"),
+(2, "Trondheim-Bodø-Nattog"),
+(3, "Trondheim-Bodø-Nattog"),
+(4, "Trondheim-Bodø-Nattog"),
+(5, "Trondheim-Bodø-Nattog"),
+(3, "MoIRana-Trondheim-Morgentog"),
+(2, "MoIRana-Trondheim-Morgentog"),
+(1, "MoIRana-Trondheim-Morgentog");
+
+Insert into Togruteforekomst (Dato, Rutenavn) VALUES
+("2023-04-04", "Trondheim-Bodø-Dagtog"),
+("2023-04-03", "Trondheim-Bodø-Nattog"),
+("2023-04-03", "Trondheim-Bodø-Dagtog"),
+("2023-04-04", "Trondheim-Bodø-Nattog"),
+("2023-04-03", "MoIRana-Trondheim-Morgentog"),
+("2023-04-04", "MoIRana-Trondheim-Morgentog");
+

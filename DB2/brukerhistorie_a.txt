@@ -1,0 +1,25 @@
+Insert into Jernbanestasjon(Navn, moh)
+Values("Trondheim S", 5.1),
+("Steinkjer", 3.6),
+("Mosjøen", 6.8),
+("Mo i Rana", 3.5),
+("Fauske", 34.0),
+("Bodø", 4.1);
+ 
+INSERT INTO Banestrekning(Navn, Fremdriftsenergi, StartstasjonNavn, SluttstasjonNavn)
+Values("Nordlandsbanen", "Diesel", "Trondheim S", "Bodø");
+ 
+INSERT INTO Delstrekning(DelstrekningID, Lengde, Sportype, BanestrekningNavn, DelstrekningStart, DelstrekningSlutt) VALUES
+(1, 120, "Dobbel", "Nordlandsbanen", "Trondheim S", "Steinkjer"),
+(2, 280, "Enkel", "Nordlandsbanen", "Steinkjer", "Mosjøen"),
+(3, 90, "Enkel", "Nordlandsbanen", "Mosjøen", "Mo i Rana"),
+(4, 170, "Enkel", "Nordlandsbanen", "Mo i Rana", "Fauske"),
+(5, 60, "Enkel", "Nordlandsbanen", "Fauske", "Bodø");
+
+
+
+
+
+
+
+

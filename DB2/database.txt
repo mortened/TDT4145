@@ -1,0 +1,231 @@
+
+CREATE TABLE Banestrekning (
+	"Navn"	VARCHAR(255),
+	"Fremdriftsenergi"	VARCHAR(255) NOT NULL,
+	"StartstasjonNavn"	VARCHAR(255) NOT NULL,
+	"SluttstasjonNavn"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("Navn"),
+	FOREIGN KEY("StartstasjonNavn") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("SluttstasjonNavn") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Seng (
+	"SengNr"	INTEGER,
+	"VogntypeNavn"	VARCHAR(255),
+	PRIMARY KEY("SengNr", "VogntypeNavn"),
+	FOREIGN KEY("VogntypeNavn") REFERENCES "Sovevogn"("VogntypeNavn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+CREATE TABLE Sete (
+	"SeteNr" INTEGER,
+	"VogntypeNavn" VARCHAR(255),
+	PRIMARY KEY("SeteNr", "VogntypeNavn"),
+	FOREIGN KEY("VogntypeNavn") REFERENCES "Sittevogn"("VogntypeNavn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE SeteBillett (
+	"BillettID" INTEGER,
+	"SeteNr" INTEGER  NOT NULL,
+	"VogntypeNavn" VARCHAR(255)  NOT NULL,
+	"Ordrenummer" INTEGER  NOT NULL,
+	"VognID" INTEGER  NOT NULL,
+	"PåstigningsStasjon" VARCHAR(255)  NOT NULL,
+	"AvstigningsStasjon" VARCHAR(255) NOT NULL,
+	PRIMARY KEY("BillettID"),
+	FOREIGN KEY("Ordrenummer") REFERENCES "Kundeordre"("Ordrenummer") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("PåstigningsStasjon") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("AvstigningsStasjon") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("SeteNr", "VogntypeNavn") REFERENCES "Sete"("SeteNr", "VogntypeNavn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("VognID") REFERENCES "Vogn"("VognID") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+CREATE TABLE SengBillett (
+	"BillettID"	INTEGER,
+	"SengNr" INTEGER NOT NULL,
+"VogntypeNavn"	VARCHAR(255) NOT NULL,
+	"Ordrenummer"	INTEGER NOT NULL,
+	"VognID" INTEGER NOT NULL,
+	"PåstigningsStasjon"	VARCHAR(255) NOT NULL,
+	"AvstigningsStasjon"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("BillettID"),
+	FOREIGN KEY("Ordrenummer") REFERENCES "Kundeordre"("Ordrenummer") ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY("PåstigningsStasjon") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY( "AvstigningsStasjon") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY("SengNr", "VogntypeNavn") REFERENCES "Seng"("SengNr", "VogntypeNavn") ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY( "VognID") REFERENCES "Vogn"("VognID") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Delstrekning (
+	"DelstrekningID"	INTEGER,
+	"Lengde"	INTEGER NOT NULL,
+	"Sportype"	VARCHAR(255) NOT NULL,
+	"BanestrekningNavn"	VARCHAR(255) NOT NULL,
+	"DelstrekningStart"	VARCHAR(255) NOT NULL,
+	"DelstrekningSlutt"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("DelstrekningID"),
+	FOREIGN KEY("BanestrekningNavn") REFERENCES "Banestrekning"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("DelstrekningStart") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("DelstrekningSlutt") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+CREATE TABLE DelstrekningPåTogrute (
+	"DelstrekningID"	INTEGER,
+	"Rutenavn"	VARCHAR(255),
+	PRIMARY KEY("DelstrekningID","Rutenavn"),
+	FOREIGN KEY("Rutenavn") REFERENCES "Togrute"("Rutenavn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("DelstrekningID") REFERENCES "Delstrekning"("DelstrekningID") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+CREATE TABLE IKundeRegister (
+	"KundeNr"	INTEGER,
+	"OperatørNavn"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("KundeNr"),
+	FOREIGN KEY("KundeNr") REFERENCES "Kunde"("KundeNr") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("OperatørNavn") REFERENCES "Operatør"(Navn) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Jernbanestasjon (
+	"Navn"	VARCHAR(255),
+	"moh"	INTEGER NOT NULL,
+	PRIMARY KEY("Navn")
+);
+
+CREATE TABLE Togruteforekomst (
+	"Dato"	DATE,
+	"Rutenavn"	VARCHAR(255),
+	PRIMARY KEY("Dato", "Rutenavn"),
+	FOREIGN KEY("Rutenavn") REFERENCES "Togrute" ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Kunde (
+	"KundeNr"	INTEGER,
+	"Navn"	VARCHAR(255) NOT NULL,
+	"Epost"	VARCHAR(255) NOT NULL,
+	"Tlf"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("KundeNr")
+);
+
+CREATE TABLE Kundeordre (
+    "Ordrenummer" INTEGER,
+    "Dato"    DATE NOT NULL,
+    "Klokkeslett"    TIME NOT NULL,
+    "KundeNr"    INTEGER NOT NULL,
+    "Avgangsdato" DATE NOT NULL,
+    "Rutenavn" VARCHAR(255) NOT NULL,
+    PRIMARY KEY("Ordrenummer"),
+    FOREIGN KEY("KundeNr") REFERENCES "Kunde"("KundeNr") ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY("Rutenavn") REFERENCES "Togrute"("Rutenavn") ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY("Avgangsdato", "Rutenavn") REFERENCES "Togruteforekomst"("Dato", "Rutenavn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Operatør (
+	"Navn"	VARCHAR(255),
+	PRIMARY KEY("Navn")
+);
+
+
+
+CREATE TABLE Sittevogn (
+	"VogntypeNavn" VARCHAR(255),
+	"AntallRader"	INTEGER NOT NULL,
+	"SeterPrRad" INTEGER NOT NULL,
+	PRIMARY KEY("VogntypeNavn")
+);
+
+CREATE TABLE SluttStasjonPåTogrute (
+	"Stasjonsnavn" VARCHAR(255),
+	"Rutenavn"	VARCHAR(255),
+	"Ankomsttid"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("Stasjonsnavn","Rutenavn"),
+	FOREIGN KEY("Stasjonsnavn") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("Rutenavn") REFERENCES "Togrute"("Rutenavn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Sovevogn (
+	"VogntypeNavn"	VARCHAR(255),
+	"AntallKupeer"  INTEGER NOT NULL,
+	PRIMARY KEY("VogntypeNavn")
+);
+
+CREATE TABLE StartStasjonPåTogrute (
+	"Stasjonsnavn"	VARCHAR(255),
+	"Rutenavn"	VARCHAR(255),
+	"Avgangstid"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("Stasjonsnavn","Rutenavn"),
+	FOREIGN KEY("Stasjonsnavn") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("Rutenavn") REFERENCES "Togrute"("Rutenavn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE StopperPåStasjon (
+	"Stasjonsnavn"	VARCHAR(255),
+	"Rutenavn"	VARCHAR(255),
+	"Avgangstid"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("Stasjonsnavn","Rutenavn"),
+	FOREIGN KEY("Stasjonsnavn") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("Rutenavn") REFERENCES "Togrute"("Rutenavn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE VogntypeIStandardoppsett (
+	"VogntypeNavn" VARCHAR(255),
+	"Rutenavn" VARCHAR(255),
+	"Nummer" INTEGER,
+	PRIMARY KEY("VogntypeNavn","Rutenavn", "Nummer"),
+FOREIGN KEY("VogntypeNavn") REFERENCES "Vogntype"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY("Rutenavn") REFERENCES "Togrute"("Rutenavn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Vogn (
+"VognID" INTEGER,
+"VogntypeNavn" VARCHAR(255) NOT NULL,
+"OperatørNavn" VARCHAR(255) NOT NULL,
+PRIMARY KEY("VognID"),
+FOREIGN KEY("VogntypeNavn") REFERENCES "Vogntype"("Navn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Vogntype (
+	"Navn" VARCHAR(255),
+	PRIMARY KEY("Navn")
+);
+
+CREATE TABLE VognTilgjengelighet(
+	"VognID" INTEGER,
+	"Tilgjengelig" BOOLEAN NOT NULL,
+	PRIMARY KEY("VognID"),
+	FOREIGN KEY("VognID") REFERENCES "Vogn"("VognID") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+CREATE TABLE VognITogruteforekomst (
+	"Dato" DATE,
+	"Rutenavn" VARCHAR(255),
+	"VognID" INTEGER,
+	"Nummer" INTEGER,
+	PRIMARY KEY("Dato","Rutenavn", "VognID"),
+	FOREIGN KEY("Dato", "Rutenavn") REFERENCES "Togruteforekomst"("Dato", "Rutenavn") ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY("VognID") REFERENCES "Vogn"("VognID") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Togrute (
+	"Rutenavn"	VARCHAR(255),
+	"Kjøreretning"	BOOLEAN NOT NULL,
+	"StartstasjonNavn"	VARCHAR(255) NOT NULL,
+	"SluttstasjonNavn"	VARCHAR(255) NOT NULL,
+	"OperatørNavn"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("Rutenavn"),
+	FOREIGN KEY("StartstasjonNavn") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("OperatørNavn") REFERENCES "Operatør"("Navn") ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY("SluttstasjonNavn") REFERENCES "Jernbanestasjon"("Navn") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+
+CREATE TABLE Togrutedag (
+"Rutenavn" VARCHAR(255),
+"Ukedag" VARCHAR(255),
+PRIMARY KEY("Rutenavn", "Ukedag"),
+FOREIGN KEY("Rutenavn") REFERENCES "Togrute" ON DELETE SET NULL ON UPDATE CASCADE
+);

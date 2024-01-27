@@ -1,0 +1,84 @@
+INSERT INTO Sittevogn(VogntypeNavn, AntallRader, SeterPrRad) VALUES
+("SJ-sittevogn-1", 3, 4);
+
+INSERT INTO Sete(SeteNr, VogntypeNavn) VALUES
+(1, "SJ-sittevogn-1"),
+(2, "SJ-sittevogn-1"),
+(3, "SJ-sittevogn-1"),
+(4, "SJ-sittevogn-1"),
+(5, "SJ-sittevogn-1"),
+(6, "SJ-sittevogn-1"),
+(7, "SJ-sittevogn-1"),
+(8, "SJ-sittevogn-1"),
+(9, "SJ-sittevogn-1"),
+(10, "SJ-sittevogn-1"),
+(11, "SJ-sittevogn-1"),
+(12, "SJ-sittevogn-1");
+
+INSERT INTO
+ Sovevogn(VogntypeNavn, AntallKupeer) VALUES
+("SJ-sovevogn-1", 4);
+
+
+
+INSERT INTO Seng(SengNr, VogntypeNavn) VALUES
+(1, "SJ-sovevogn-1"),
+(2, "SJ-sovevogn-1"),
+(3, "SJ-sovevogn-1"),
+(4, "SJ-sovevogn-1"),
+(5, "SJ-sovevogn-1"),
+(6, "SJ-sovevogn-1"),
+(7, "SJ-sovevogn-1"),
+(8, "SJ-sovevogn-1");
+
+INSERT INTO Vogntype(Navn) VALUES
+("SJ-sovevogn-1"),
+("SJ-sittevogn-1");
+
+
+INSERT INTO Vogn(VognID, VogntypeNavn, OperatørNavn) VALUES
+(1, "SJ-sittevogn-1", "SJ-Nord" ),
+(2, "SJ-sovevogn-1", "SJ-Nord" ),
+(3, "SJ-sittevogn-1", "SJ-Nord" ),
+(4, "SJ-sittevogn-1", "SJ-Nord" ),
+(5, "SJ-sovevogn-1", "SJ-Nord" ),
+(6, "SJ-sovevogn-1", "SJ-Nord" ),
+(7, "SJ-sittevogn-1", "SJ-Nord" ),
+(8, "SJ-sovevogn-1", "SJ-Nord" );
+
+
+INSERT INTO VognTilgjengelighet(VognID, Tilgjengelig) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5,1);
+
+
+INSERT INTO VogntypeIStandardoppsett(VogntypeNavn, Rutenavn, Nummer) VALUES
+("SJ-sittevogn-1", "Trondheim-Bodø-Dagtog", 1),
+("SJ-sittevogn-1", "Trondheim-Bodø-Dagtog", 2),
+("SJ-sovevogn-1", "Trondheim-Bodø-Dagtog", 3),
+("SJ-sittevogn-1", "Trondheim-Bodø-Nattog", 1),
+("SJ-sovevogn-1", "Trondheim-Bodø-Nattog", 2),
+("SJ-sovevogn-1", "Trondheim-Bodø-Nattog", 3),
+("SJ-sittevogn-1", "MoIRana-Trondheim-Morgentog",1),
+("SJ-sittevogn-1", "MoIRana-Trondheim-Morgentog",2);
+
+INSERT INTO VognITogruteforekomst(Dato, Rutenavn, VognID, Nummer) VALUES
+("2023-04-04", "Trondheim-Bodø-Dagtog", 1, 1),
+("2023-04-04", "Trondheim-Bodø-Dagtog", 3, 2),
+("2023-04-04", "Trondheim-Bodø-Dagtog", 2, 3),
+("2023-04-04", "Trondheim-Bodø-Nattog", 4, 1),
+("2023-04-04", "Trondheim-Bodø-Nattog", 5, 2),
+("2023-04-04", "Trondheim-Bodø-Nattog", 6, 3),
+("2023-04-04", "MoIRana-Trondheim-Morgentog", 7, 1),
+("2023-04-04", "MoIRana-Trondheim-Morgentog", 8, 2),
+("2023-04-03", "Trondheim-Bodø-Dagtog", 1, 1),
+("2023-04-03", "Trondheim-Bodø-Dagtog", 3, 2),
+("2023-04-03", "Trondheim-Bodø-Dagtog", 2, 3),
+("2023-04-03", "Trondheim-Bodø-Nattog", 4, 1),
+("2023-04-03", "Trondheim-Bodø-Nattog", 5, 2),
+("2023-04-03", "Trondheim-Bodø-Nattog", 6, 3),
+("2023-04-03", "MoIRana-Trondheim-Morgentog", 7, 1),
+("2023-04-03", "MoIRana-Trondheim-Morgentog", 8, 2);
